@@ -1,0 +1,11 @@
+---
+interface Props {
+  text: string;
+  fontSize?: string;
+}
+const { text, fontSize = "text-4xl" } = Astro.props;
+---
+
+<span class={`${fontSize} text-white bg-red-500 tracking-tighter px-1`}
+  >{text}</span
+>

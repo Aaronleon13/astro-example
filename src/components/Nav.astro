@@ -1,11 +1,33 @@
-<header class="w-full h-15 bg-white/50">
-  <nav class="flex items-center justify-between max-w-5xl mx-auto">
-    <span class="text-4xl text-white bg-red-500 tracking-tighter px-1"
-      >MARVEL</span
-    >
-    <ul>
-      <li>Catalogo</li>
-      <li>Información</li>
+---
+import Title from "./Title.astro";
+interface Links {
+  label: string;
+  href: string;
+}
+const links: Links[] = [
+  { label: "Catalogo", href: "/catalogo" },
+  { label: "Información", href: "/info" },
+];
+---
+
+<header class="w-full h-15 bg-white/80">
+  <nav
+    class="flex items-center justify-between max-w-5xl mx-auto h-full px-2 sm:px-0"
+  >
+    <Title text="Nicolas" />
+    <ul class="flex gap-x-4 group">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="group-hover:text-red-500 group-hover:bg-white group-hover:not-hover:opacity-20 group-hover:not-hover:text-black transition-all duration-500 ease-linear"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </nav>
 </header>
