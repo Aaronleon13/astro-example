@@ -2,10 +2,11 @@
 interface Props {
   text: string;
   fontSize?: string;
+  as?: string;
 }
-const { text, fontSize = "text-4xl" } = Astro.props;
+const { text, fontSize = "text-4xl", as: Tag = "span" } = Astro.props;
 ---
 
-<span class={`${fontSize} text-white bg-red-500 tracking-tighter px-1`}
-  >{text}</span
+<Tag class={`${fontSize} text-white bg-red-500 tracking-tighter px-2`}
+  >{text}</Tag
 >

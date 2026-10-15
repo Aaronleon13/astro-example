@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@theme {
+  --color-rojo-avengers: #8d1c1c;
+}
+
 @font-face {
   font-family: "Bebas Neue";
   font-style: normal;

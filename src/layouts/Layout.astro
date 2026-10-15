@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+
+const imagePath = (file: string) => `/images/${file}`; // Esta es una funcion de flecha
 ---
 
 <!doctype html>
@@ -13,7 +15,7 @@ import "../styles/global.css";
     <title>Astro Basics</title>
   </head>
   <body
-    style="background-image: url(/images/bg-home.webp);"
+    style={`background-image: url(${imagePath("bg-home.webp")})`}
     class="bg-auto bg-center bg-repeat"
   >
     <slot />
