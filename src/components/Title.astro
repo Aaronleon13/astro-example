@@ -7,6 +7,6 @@ interface Props {
 const { text, fontSize = "text-4xl", as: Tag = "span" } = Astro.props;
 ---
 
-<Tag class={`${fontSize} text-white bg-red-500 tracking-tighter px-2`}
+<Tag class={`${fontSize} text-white bg-red-500 tracking-tight px-2 font-bold`}
   >{text}</Tag
 >

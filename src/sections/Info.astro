@@ -1,0 +1,41 @@
+---
+const imagePath = (file: string) => `/images/heroes/${file}`;
+
+const items = [
+  { image: imagePath("deadpool.webp"), alt: "deadpool" },
+  { image: imagePath("groot.webp"), alt: "groot" },
+  { image: imagePath("gamora.webp"), alt: "gamora" },
+  { image: imagePath("wolverine.webp"), alt: "wolverine" },
+];
+---
+
+<section class="w-full min-h-[60vh] bg-white/80 flex justify-center py-5">
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-10 max-w-4xl w-full p-2">
+    <div
+      class="grid grid-cols-2 rounded-3xl overflow-hidden drop-shadow-2xl drop-shadow-black order-2 sm:order-1"
+    >
+      {
+        items.map((item) => (
+          <div class="overflow-hidden">
+            <img
+              src={item.image}
+              alt={item.alt}
+              class="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-150 transition-all duration-500 ease-linear"
+            />
+          </div>
+        ))
+      }
+    </div>
+    <div class="flex flex-col justify-center order-1 sm:order-2">
+      <h3 class="text-black text-6xl">Descubre toda la información</h3>
+      <p class="text-black">
+        Conoce todo sobre los Vengadores, sus poderes, habilidades y más.
+      </p>
+      <a
+        href="/catalogo"
+        class="bg-red-500 text-white p-2 w-32 text-center rounded-md hover:opacity-80 transition-opacity"
+        >Explorar Heroes</a
+      >
+    </div>
+  </div>
+</section>
