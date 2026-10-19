@@ -1,6 +1,23 @@
 ---
 import "../styles/global.css";
 
+interface Props {
+  title: string;
+  description: string;
+  author?: string;
+  keywords: string;
+  image: string;
+  url: string;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  author = "Chicos 7mo",
+  image,
+  url,
+} = Astro.props;
 const imagePath = (file: string) => `/images/${file}`; // Esta es una funcion de flecha
 ---
 
@@ -11,8 +28,15 @@ const imagePath = (file: string) => `/images/${file}`; // Esta es una funcion de
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={author} />
+    <meta name="keywords" content={keywords} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={url} />
+    <meta property="og:type" content="website" />
+    <title>{title}</title>
   </head>
   <body
     style={`background-image: url(${imagePath("bg-home.webp")})`}
