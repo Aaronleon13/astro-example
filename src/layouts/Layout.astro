@@ -6,18 +6,9 @@ interface Props {
   description: string;
   author?: string;
   keywords: string;
-  image: string;
-  url: string;
 }
 
-const {
-  title,
-  description,
-  keywords,
-  author = "Chicos 7mo",
-  image,
-  url,
-} = Astro.props;
+const { title, description, keywords, author = "Chicos 7mo" } = Astro.props;
 const imagePath = (file: string) => `/images/${file}`; // Esta es una funcion de flecha
 ---
 
@@ -33,8 +24,6 @@ const imagePath = (file: string) => `/images/${file}`; // Esta es una funcion de
     <meta name="keywords" content={keywords} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
-    <meta property="og:url" content={url} />
     <meta property="og:type" content="website" />
     <title>{title}</title>
   </head>
