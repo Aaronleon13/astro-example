@@ -1,0 +1,26 @@
+---
+import type { Page } from "astro";
+
+interface Props {
+  page: Pick<Page, "start" | "end" | "total">;
+}
+
+const { page } = Astro.props;
+---
+
+<header class="mb-4 flex flex-wrap items-end justify-between gap-4">
+  <div>
+    <p class="mb-2 text-sm tracking-[0.25em] text-red-400">
+      Universo Marvel
+    </p>
+    <h1
+      id="characters-title"
+      class="text-4xl tracking-wide text-white sm:text-5xl"
+    >
+      Personajes
+    </h1>
+  </div>
+  <p class="text-base tracking-wide text-white/70">
+    {page.start + 1}–{page.end + 1} de {page.total} personajes
+  </p>
+</header>

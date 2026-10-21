@@ -1,0 +1,33 @@
+---
+import type { Hero } from "../../types/Hero";
+
+interface Props {
+  biography: Hero["biography"];
+  appearance: Hero["appearance"];
+}
+
+const { biography, appearance } = Astro.props;
+const details = [
+  { label: "Lugar de nacimiento", value: biography.placeOfBirth },
+  { label: "Especie", value: appearance.race },
+  { label: "Género", value: appearance.gender },
+  { label: "Altura", value: appearance.height },
+  { label: "Peso", value: appearance.weight },
+];
+---
+
+<section aria-labelledby="details-title" class="border-t border-zinc-200 pt-6">
+  <h2 id="details-title" class="text-2xl tracking-wide">Ficha del personaje</h2>
+  <dl class="mt-4 grid grid-cols-2 gap-x-6 gap-y-5 font-sans text-sm">
+    {
+      details.map(({ label, value }, index) => (
+        <div class:list={["min-w-0", { "col-span-2": index === 0 }]}>
+          <dt class="text-zinc-500">{label}</dt>
+          <dd class="mt-1 wrap-break-word leading-relaxed text-zinc-900">
+            {value || "Sin información"}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>

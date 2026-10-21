@@ -1,0 +1,68 @@
+---
+import type { Page } from "astro";
+
+interface Props {
+  page: Pick<Page, "url" | "currentPage" | "lastPage">;
+}
+
+const { page } = Astro.props;
+---
+
+<nav
+  aria-label="Paginación de personajes"
+  class="mt-8 flex flex-wrap items-center justify-center gap-3 pt-6"
+>
+  {
+    page.url.prev ? (
+      <a
+        href={page.url.prev}
+        rel="prev"
+        class="inline-flex min-h-11 items-center rounded-md border border-white/25 px-4 text-white transition-colors hover:border-red-500 hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400"
+      >
+        <span aria-hidden="true" class="mr-2">
+          ←
+        </span>{" "}
+        Anterior
+      </a>
+    ) : (
+      <span
+        aria-disabled="true"
+        class="inline-flex min-h-11 items-center rounded-md border border-white/10 px-4 text-white/35"
+      >
+        <span aria-hidden="true" class="mr-2">
+          ←
+        </span>{" "}
+        Anterior
+      </span>
+    )
+  }
+  <p class="px-2 text-sm tracking-wide text-white/70">
+    Página <span class="text-white">{page.currentPage}</span> de {
+      page.lastPage
+    }
+  </p>
+  {
+    page.url.next ? (
+      <a
+        href={page.url.next}
+        rel="next"
+        class="inline-flex min-h-11 items-center rounded-md border border-white/25 px-4 text-white transition-colors hover:border-red-500 hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-400"
+      >
+        Siguiente{" "}
+        <span aria-hidden="true" class="ml-2">
+          →
+        </span>
+      </a>
+    ) : (
+      <span
+        aria-disabled="true"
+        class="inline-flex min-h-11 items-center rounded-md border border-white/10 px-4 text-white/35"
+      >
+        Siguiente{" "}
+        <span aria-hidden="true" class="ml-2">
+          →
+        </span>
+      </span>
+    )
+  }
+</nav>

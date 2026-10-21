@@ -1,0 +1,34 @@
+---
+import type { Hero } from "../../types/Hero";
+
+interface Props {
+  hero: Hero;
+  loading?: "eager" | "lazy";
+}
+
+const { hero, loading = "lazy" } = Astro.props;
+---
+
+<li>
+  <a
+    href={`/heroe/${hero.slug}`}
+    class="group flex min-w-0 flex-col overflow-hidden rounded-lg border border-white/15 bg-white shadow-lg transition-colors hover:border-red-500"
+  >
+    <div class="aspect-4/5 overflow-hidden bg-zinc-900">
+      <img
+        src={hero.image}
+        alt={hero.name}
+        loading={loading}
+        class="h-full w-full object-cover motion-safe:transition-transform motion-safe:duration-300 motion-safe:group-hover:scale-105"
+      />
+    </div>
+    <div class="flex-1 border-t-4 border-red-600 px-3 py-3">
+      <h2 class="wrap-break-word text-lg leading-tight text-zinc-900">
+        {hero.name}
+      </h2>
+      <p class="mt-1 wrap-break-word text-sm text-zinc-600">
+        {hero.biography.fullName}
+      </p>
+    </div>
+  </a>
+</li>

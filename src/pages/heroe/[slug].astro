@@ -1,0 +1,81 @@
+---
+import type { GetStaticPaths } from "astro";
+import Layout from "../../layouts/Layout.astro";
+import { marvelCharacters } from "../../data/data.ts";
+import Footer from "../../components/Footer.astro";
+import Nav from "../../components/Nav.astro";
+import Portrait from "../../components/heroe/Portrait.astro";
+import Details from "../../components/heroe/Details.astro";
+import PowerStats from "../../components/heroe/PowerStats.astro";
+import Abilities from "../../components/heroe/Abilities.astro";
+import type { Hero } from "../../types/Hero";
+
+interface Props {
+  hero: Hero;
+}
+
+export const getStaticPaths = (() => {
+  return marvelCharacters.map((hero) => {
+    return {
+      params: {
+        slug: hero.slug,
+      },
+      props: {
+        hero,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { hero } = Astro.props;
+---
+
+<Layout
+  title={hero.name}
+  description={hero.biography.fullName}
+  keywords="Super Heroes, Marvel, Grupo 124"
+>
+  <Nav />
+  <main
+    class="min-h-[calc(100svh-100px)] bg-zinc-50/90 px-4 py-8 text-zinc-900 sm:px-6 sm:py-12"
+  >
+    <div class="mx-auto max-w-5xl">
+      <a
+        href="/personajes"
+        class="mb-8 inline-flex min-h-11 items-center gap-2 rounded-sm font-sans text-sm text-zinc-600 transition-colors hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+      >
+        <span aria-hidden="true">←</span>
+        Todos los personajes
+      </a>
+
+      <article
+        aria-labelledby="hero-name"
+        class="grid items-start gap-8 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.4fr)] md:gap-12 lg:gap-16"
+      >
+        <Portrait hero={hero} />
+        <div class="min-w-0 space-y-7">
+          <header>
+            <p class="mb-3 text-sm tracking-[0.2em] text-red-600">
+              Universo Marvel
+            </p>
+            <h1
+              id="hero-name"
+              class="wrap-break-word text-5xl leading-none sm:text-6xl lg:text-7xl"
+            >
+              {hero.name}
+            </h1>
+            <p
+              class="mt-3 font-sans text-base leading-relaxed text-zinc-500 sm:text-lg"
+            >
+              {hero.biography.fullName}
+            </p>
+          </header>
+          <Details biography={hero.biography} appearance={hero.appearance} />
+          <PowerStats stats={hero.powerstats} />
+          <Abilities abilities={hero.habilidades} />
+        </div>
+      </article>
+    </div>
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,20 @@
+---
+import type { Hero } from "../../types/Hero";
+
+interface Props {
+  hero: Pick<Hero, "name" | "image">;
+}
+
+const { hero } = Astro.props;
+---
+
+<figure class="overflow-hidden rounded-lg bg-zinc-200">
+  <img
+    src={hero.image}
+    alt={hero.name}
+    width="480"
+    height="600"
+    fetchpriority="high"
+    class="aspect-4/5 w-full object-cover object-top"
+  />
+</figure>
