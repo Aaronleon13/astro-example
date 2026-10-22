@@ -27,12 +27,16 @@ const keys = Object.keys(labels) as (keyof typeof labels)[];
       keys.map((key) => {
         const value = stats[key];
         const hasValue = typeof value === "number" && Number.isFinite(value);
-        const normalizedValue = hasValue ? Math.min(100, Math.max(0, value)) : 0;
+        const normalizedValue = hasValue
+          ? Math.min(100, Math.max(0, value))
+          : 0;
 
         return (
           <div class="font-sans text-sm">
             <div class="mb-2 flex items-center justify-between gap-3">
-              <span id={`stat-${key}`} class="text-zinc-600">{labels[key]}</span>
+              <span id={`stat-${key}`} class="text-zinc-600">
+                {labels[key]}
+              </span>
               <span class="text-xs font-medium tabular-nums text-zinc-900">
                 {hasValue ? normalizedValue : "Sin datos"}
               </span>
@@ -45,10 +49,10 @@ const keys = Object.keys(labels) as (keyof typeof labels)[];
                 data-animate-stat
                 data-value={normalizedValue}
                 aria-labelledby={`stat-${key}`}
-                class="block h-[5px] w-full overflow-hidden rounded-full border-0 bg-zinc-200
-                  [&::-webkit-meter-bar]:h-[5px] [&::-webkit-meter-bar]:rounded-full [&::-webkit-meter-bar]:border-0 [&::-webkit-meter-bar]:bg-zinc-200
-                  [&::-webkit-meter-optimum-value]:rounded-full [&::-webkit-meter-optimum-value]:bg-red-600
-                  [&::-moz-meter-bar]:rounded-full [&::-moz-meter-bar]:bg-red-600"
+                class="block h-1.25 w-full appearance-auto overflow-hidden rounded-full border-0 bg-zinc-200 supports-[-webkit-touch-callout:none]:appearance-none
+                  [&::-webkit-meter-bar]:h-1.25 [&::-webkit-meter-bar]:rounded-full [&::-webkit-meter-bar]:border-0 [&::-webkit-meter-bar]:bg-zinc-200 [&::-webkit-meter-bar]:bg-none
+                  [&::-webkit-meter-optimum-value]:h-full [&::-webkit-meter-optimum-value]:rounded-full [&::-webkit-meter-optimum-value]:bg-red-600 [&::-webkit-meter-optimum-value]:bg-none
+                  [&::-moz-meter-bar]:rounded-full [&::-moz-meter-bar]:border-0 [&::-moz-meter-bar]:bg-red-600 [&::-moz-meter-bar]:bg-none"
               >
                 {normalizedValue} de 100
               </meter>
@@ -67,7 +71,10 @@ const keys = Object.keys(labels) as (keyof typeof labels)[];
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          if (!entry.isIntersecting || !(entry.target instanceof HTMLMeterElement)) {
+          if (
+            !entry.isIntersecting ||
+            !(entry.target instanceof HTMLMeterElement)
+          ) {
             continue;
           }
 
