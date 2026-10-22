@@ -2,10 +2,10 @@
 const imagePath = (file: string) => `/images/heroes/${file}`;
 
 const items = [
-  { image: imagePath("deadpool.webp"), alt: "deadpool" },
-  { image: imagePath("groot.webp"), alt: "groot" },
-  { image: imagePath("gamora.webp"), alt: "gamora" },
-  { image: imagePath("wolverine.webp"), alt: "wolverine" },
+  { image: imagePath("deadpool.webp"), alt: "Deadpool" },
+  { image: imagePath("groot.webp"), alt: "Groot" },
+  { image: imagePath("gamora.webp"), alt: "Gamora" },
+  { image: imagePath("wolverine.webp"), alt: "Wolverine" },
 ];
 ---
 
@@ -16,13 +16,19 @@ const items = [
     >
       {
         items.map((item) => (
-          <div class="overflow-hidden">
+          <button
+            type="button"
+            data-image-toggle
+            aria-label={`Resaltar a ${item.alt}`}
+            aria-pressed="false"
+            class="group w-full overflow-hidden touch-manipulation focus-visible:outline-4 focus-visible:-outline-offset-4 focus-visible:outline-red-600"
+          >
             <img
               src={item.image}
               alt={item.alt}
-              class="w-full h-full object-cover grayscale hover:grayscale-0 hover:scale-150 transition-all duration-500 ease-linear"
+              class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-150 group-focus-visible:grayscale-0 group-focus-visible:scale-150 group-aria-pressed:grayscale-0 group-aria-pressed:scale-150 transition-all duration-500 ease-linear motion-reduce:transition-none"
             />
-          </div>
+          </button>
         ))
       }
     </div>
@@ -39,3 +45,11 @@ const items = [
     </div>
   </div>
 </section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-image-toggle]").forEach((button) => {
+    button.addEventListener("click", () => {
+      button.setAttribute("aria-pressed", String(button.getAttribute("aria-pressed") !== "true"));
+    });
+  });
+</script>

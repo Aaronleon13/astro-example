@@ -1,6 +1,6 @@
 <template>
-  <div class="relative w-full text-left font-bebas" @focusin="isOpen = true" @focusout="handleFocusOut">
-    <form role="search" aria-label="Buscar personajes" @submit.prevent>
+  <div ref="container" class="relative w-full text-left font-bebas" @focusin="isOpen = true">
+    <form role="search" aria-label="Buscar personajes" @submit.prevent="submitSearch">
       <label :for="searchId" class="sr-only">Buscar por personaje o nombre real</label>
       <div
         class="flex items-center rounded-md border border-zinc-300 bg-white text-zinc-900 focus-within:border-red-600 focus-within:ring-2 focus-within:ring-red-600/20">
@@ -12,8 +12,8 @@
         <input :id="searchId" ref="input" v-model="query" type="search" name="personaje" autocomplete="off"
           placeholder="Buscar personaje..." :aria-describedby="`${searchId}-status`"
           :aria-controls="`${searchId}-results`"
-          class="min-h-12 min-w-0 flex-1 appearance-none bg-transparent px-3 py-3 text-sm placeholder:text-zinc-500 focus:outline-none [&::-webkit-search-cancel-button]:appearance-none"
-          @keydown.esc="clearSearch" />
+          class="min-h-12 min-w-0 flex-1 appearance-none bg-transparent px-3 py-3 text-base placeholder:text-zinc-500 focus:outline-none [&::-webkit-search-cancel-button]:appearance-none"
+          @input="isOpen = true" @keydown.esc="clearSearch" />
         <button v-if="query" type="button" aria-label="Limpiar búsqueda"
           class="mr-1 inline-flex size-11 shrink-0 items-center justify-center rounded-sm text-zinc-500 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-red-600"
           @click="clearSearch">
@@ -51,12 +51,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useId } from "vue";
+import { computed, onMounted, onUnmounted, ref, useId } from "vue";
 import { marvelCharacters } from "../../data/data";
 
 const searchId = useId();
 const query = ref("");
 const isOpen = ref(false);
+const container = ref<HTMLDivElement | null>(null);
 const input = ref<HTMLInputElement | null>(null);
 
 const normalize = (value: string) =>
@@ -78,14 +79,29 @@ const results = computed(() => {
   );
 });
 
-function handleFocusOut(event: FocusEvent) {
-  const container = event.currentTarget;
+// Touch browsers can blur the input before a result link receives its click.
+function handleOutsideInteraction(event: Event) {
   if (
-    container instanceof HTMLElement &&
-    (!(event.relatedTarget instanceof Node) || !container.contains(event.relatedTarget))
+    event.target instanceof Node &&
+    !container.value?.contains(event.target)
   ) {
     isOpen.value = false;
   }
+}
+
+onMounted(() => {
+  document.addEventListener("pointerdown", handleOutsideInteraction);
+  document.addEventListener("focusin", handleOutsideInteraction);
+});
+
+onUnmounted(() => {
+  document.removeEventListener("pointerdown", handleOutsideInteraction);
+  document.removeEventListener("focusin", handleOutsideInteraction);
+});
+
+function submitSearch() {
+  const hero = results.value[0];
+  if (hero) window.location.assign(`/heroe/${hero.slug}/`);
 }
 
 function clearSearch() {
