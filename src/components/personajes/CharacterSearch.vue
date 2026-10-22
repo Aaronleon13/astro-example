@@ -37,7 +37,7 @@
         <ul v-if="results.length" role="list" aria-label="Resultados de búsqueda"
           class="max-h-80 overflow-y-auto overscroll-contain divide-y divide-zinc-100">
           <li v-for="hero in results" :key="hero.id">
-            <a :href="`/heroe/${hero.slug}`"
+            <a :href="`/heroe/${hero.slug}/${currentPage ? `?page=${currentPage}` : ''}`"
               class="block px-4 py-3 hover:bg-zinc-50 focus-visible:bg-zinc-50 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-red-600">
               <span class="block wrap-break-word text-sm font-medium">{{ hero.name }}</span>
               <span class="mt-0.5 block wrap-break-word text-xs text-zinc-500">{{ hero.biography.fullName }}</span>
@@ -53,6 +53,8 @@
 <script setup lang="ts">
 import { computed, ref, useId } from "vue";
 import { marvelCharacters } from "../../data/data";
+
+defineProps<{ currentPage?: number }>();
 
 const searchId = useId();
 const query = ref("");

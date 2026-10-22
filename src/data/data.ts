@@ -1,5 +1,6 @@
 import type { Hero } from "../types/Hero.ts";
 
+export const CHARACTERS_PAGE_SIZE = 10;
 
 export const marvelCharacters: Hero[] = [
 	{

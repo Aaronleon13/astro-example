@@ -4,15 +4,16 @@ import Card from "./Card.astro";
 
 interface Props {
   characters: Hero[];
+  currentPage: number;
 }
 
-const { characters } = Astro.props;
+const { characters, currentPage } = Astro.props;
 ---
 
 <ul role="list" class="grid grid-cols-2 gap-4 sm:grid-cols-5 sm:gap-5">
   {
     characters.map((hero, index) => (
-      <Card hero={hero} loading={index < 5 ? "eager" : "lazy"} />
+      <Card hero={hero} currentPage={currentPage} loading={index < 5 ? "eager" : "lazy"} />
     ))
   }
 </ul>

@@ -3,15 +3,16 @@ import type { Hero } from "../../types/Hero";
 
 interface Props {
   hero: Hero;
+  currentPage: number;
   loading?: "eager" | "lazy";
 }
 
-const { hero, loading = "lazy" } = Astro.props;
+const { hero, currentPage, loading = "lazy" } = Astro.props;
 ---
 
 <li>
   <a
-    href={`/heroe/${hero.slug}`}
+    href={`/heroe/${hero.slug}/?page=${currentPage}`}
     class="group flex min-w-0 flex-col overflow-hidden rounded-lg border border-white/15 bg-white shadow-lg transition-colors hover:border-red-500"
   >
     <div class="aspect-4/5 overflow-hidden bg-zinc-900">

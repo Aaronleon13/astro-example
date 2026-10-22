@@ -1,7 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Layout from "../../layouts/Layout.astro";
-import { marvelCharacters } from "../../data/data.ts";
+import { CHARACTERS_PAGE_SIZE, marvelCharacters } from "../../data/data.ts";
 import Footer from "../../components/Footer.astro";
 import Nav from "../../components/Nav.astro";
 import Portrait from "../../components/heroe/Portrait.astro";
@@ -12,22 +12,25 @@ import type { Hero } from "../../types/Hero";
 
 interface Props {
   hero: Hero;
+  listingPage: number;
 }
 
 export const getStaticPaths = (() => {
-  return marvelCharacters.map((hero) => {
+  return marvelCharacters.map((hero, index) => {
     return {
       params: {
         slug: hero.slug,
       },
       props: {
         hero,
+        listingPage: Math.floor(index / CHARACTERS_PAGE_SIZE) + 1,
       },
     };
   });
 }) satisfies GetStaticPaths;
 
-const { hero } = Astro.props;
+const { hero, listingPage } = Astro.props;
+const lastPage = Math.ceil(marvelCharacters.length / CHARACTERS_PAGE_SIZE);
 ---
 
 <Layout
@@ -41,7 +44,9 @@ const { hero } = Astro.props;
   >
     <div class="mx-auto max-w-5xl">
       <a
-        href="/personajes"
+        id="back-to-characters"
+        href={`/personajes/${listingPage}/`}
+        data-last-page={lastPage}
         class="mb-8 inline-flex min-h-11 items-center gap-2 rounded-sm text-sm text-zinc-600 transition-colors hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
       >
         <span aria-hidden="true">←</span>
@@ -77,3 +82,18 @@ const { hero } = Astro.props;
   </main>
   <Footer />
 </Layout>
+
+<script>
+  // The site is static, so read the originating page in the browser.
+  const link = document.querySelector<HTMLAnchorElement>("#back-to-characters");
+  const page = new URLSearchParams(window.location.search).get("page");
+
+  if (
+    link &&
+    page &&
+    /^[1-9]\d*$/.test(page) &&
+    Number(page) <= Number(link.dataset.lastPage)
+  ) {
+    link.href = `/personajes/${page}/`;
+  }
+</script>

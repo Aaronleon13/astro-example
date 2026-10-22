@@ -1,5 +1,5 @@
 ---
-import { marvelCharacters } from "../../data/data.ts";
+import { CHARACTERS_PAGE_SIZE, marvelCharacters } from "../../data/data.ts";
 import type { GetStaticPaths, Page } from "astro";
 import type { Hero } from "../../types/Hero";
 import Layout from "../../layouts/Layout.astro";
@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const getStaticPaths = (({ paginate }) => {
-  return paginate(marvelCharacters, { pageSize: 10 });
+  return paginate(marvelCharacters, { pageSize: CHARACTERS_PAGE_SIZE });
 }) satisfies GetStaticPaths;
 
 const { page } = Astro.props;
@@ -35,9 +35,9 @@ const { page } = Astro.props;
     >
       <Header page={page} />
       <div class="mb-8 max-w-xl">
-        <CharacterSearch client:load />
+        <CharacterSearch currentPage={page.currentPage} client:load />
       </div>
-      <Grid characters={page.data} />
+      <Grid characters={page.data} currentPage={page.currentPage} />
       <PaginationNav page={page} />
     </section>
   </main>
