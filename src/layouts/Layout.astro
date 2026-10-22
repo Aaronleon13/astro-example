@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import "@fontsource/bebas-neue/latin-400.css";
 
 interface Props {
   title: string;
@@ -9,7 +10,6 @@ interface Props {
 }
 
 const { title, description, keywords, author = "Chicos 7mo" } = Astro.props;
-const imagePath = (file: string) => `/images/${file}`; // Esta es una funcion de flecha
 ---
 
 <!doctype html>
@@ -28,8 +28,7 @@ const imagePath = (file: string) => `/images/${file}`; // Esta es una funcion de
     <title>{title}</title>
   </head>
   <body
-    style={`background-image: url(${imagePath("bg-home.webp")})`}
-    class="bg-auto bg-center bg-repeat"
+    class="bg-[url('/images/bg-home.webp')] bg-auto bg-center bg-repeat font-bebas"
   >
     <slot />
   </body>

@@ -45,7 +45,10 @@ const keys = Object.keys(labels) as (keyof typeof labels)[];
                 data-animate-stat
                 data-value={normalizedValue}
                 aria-labelledby={`stat-${key}`}
-                class="stat-meter"
+                class="block h-[5px] w-full overflow-hidden rounded-full border-0 bg-zinc-200
+                  [&::-webkit-meter-bar]:h-[5px] [&::-webkit-meter-bar]:rounded-full [&::-webkit-meter-bar]:border-0 [&::-webkit-meter-bar]:bg-zinc-200
+                  [&::-webkit-meter-optimum-value]:rounded-full [&::-webkit-meter-optimum-value]:bg-red-600
+                  [&::-moz-meter-bar]:rounded-full [&::-moz-meter-bar]:bg-red-600"
               >
                 {normalizedValue} de 100
               </meter>
@@ -102,32 +105,3 @@ const keys = Object.keys(labels) as (keyof typeof labels)[];
     });
   }
 </script>
-
-<style>
-  .stat-meter {
-    display: block;
-    width: 100%;
-    height: 5px;
-    overflow: hidden;
-    border: 0;
-    border-radius: 999px;
-    background: #e4e4e7;
-  }
-
-  .stat-meter::-webkit-meter-bar {
-    height: 5px;
-    border: 0;
-    border-radius: 999px;
-    background: #e4e4e7;
-  }
-
-  .stat-meter::-webkit-meter-optimum-value {
-    border-radius: 999px;
-    background: #dc2626;
-  }
-
-  .stat-meter::-moz-meter-bar {
-    border-radius: 999px;
-    background: #dc2626;
-  }
-</style>
