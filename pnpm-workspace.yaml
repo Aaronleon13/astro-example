@@ -1,5 +1,0 @@
-packages:
-  - '.'
-
-minimumReleaseAgeExclude:
-  - '@astrojs/vue@7.1.2'
