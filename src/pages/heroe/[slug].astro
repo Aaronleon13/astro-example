@@ -30,7 +30,6 @@ export const getStaticPaths = (() => {
 }) satisfies GetStaticPaths;
 
 const { hero, listingPage } = Astro.props;
-const lastPage = Math.ceil(marvelCharacters.length / CHARACTERS_PAGE_SIZE);
 ---
 
 <Layout
@@ -46,7 +45,6 @@ const lastPage = Math.ceil(marvelCharacters.length / CHARACTERS_PAGE_SIZE);
       <a
         id="back-to-characters"
         href={`/personajes/${listingPage}/`}
-        data-last-page={lastPage}
         class="mb-8 inline-flex min-h-11 items-center gap-2 rounded-sm text-sm text-zinc-600 transition-colors hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
       >
         <span aria-hidden="true">←</span>
@@ -82,18 +80,3 @@ const lastPage = Math.ceil(marvelCharacters.length / CHARACTERS_PAGE_SIZE);
   </main>
   <Footer />
 </Layout>
-
-<script>
-  // The site is static, so read the originating page in the browser.
-  const link = document.querySelector<HTMLAnchorElement>("#back-to-characters");
-  const page = new URLSearchParams(window.location.search).get("page");
-
-  if (
-    link &&
-    page &&
-    /^[1-9]\d*$/.test(page) &&
-    Number(page) <= Number(link.dataset.lastPage)
-  ) {
-    link.href = `/personajes/${page}/`;
-  }
-</script>

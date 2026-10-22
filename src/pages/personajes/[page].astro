@@ -35,9 +35,9 @@ const { page } = Astro.props;
     >
       <Header page={page} />
       <div class="mb-8 max-w-xl">
-        <CharacterSearch currentPage={page.currentPage} client:load />
+        <CharacterSearch client:load />
       </div>
-      <Grid characters={page.data} currentPage={page.currentPage} />
+      <Grid characters={page.data} />
       <PaginationNav page={page} />
     </section>
   </main>
