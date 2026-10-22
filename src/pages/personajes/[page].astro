@@ -7,6 +7,7 @@ import Nav from "../../components/Nav.astro";
 import Header from "../../components/personajes/Header.astro";
 import Grid from "../../components/personajes/Grid.astro";
 import PaginationNav from "../../components/personajes/Nav.astro";
+import CharacterSearch from "../../components/personajes/CharacterSearch.vue";
 
 interface Props {
   page: Page<Hero>;
@@ -33,6 +34,9 @@ const { page } = Astro.props;
       class="mx-auto w-full max-w-5xl"
     >
       <Header page={page} />
+      <div class="mb-8 max-w-xl">
+        <CharacterSearch client:load />
+      </div>
       <Grid characters={page.data} />
       <PaginationNav page={page} />
     </section>
